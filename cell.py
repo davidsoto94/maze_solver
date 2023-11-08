@@ -2,7 +2,7 @@ from graphics import Line, Point
 
 
 class Cell:
-    def __init__(self, _win = None):
+    def __init__(self, _win = None, visited=False):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
@@ -12,6 +12,7 @@ class Cell:
         self._y1 = None
         self._y2 = None
         self._win = _win
+        self.visited = visited
 
     def draw(self, _x1, _y1, _x2, _y2):
         if self._win is None:
@@ -20,29 +21,30 @@ class Cell:
         self._x2 = _x2
         self._y1 = _y1
         self._y2 = _y2
+
+        line = Line(Point(self._x1, self._y1), Point(self._x1, self._y2))
         if self.has_left_wall:
-            point1 = Point(self._x1, self._y1)
-            point2 = Point(self._x1, self._y2)
-            line = Line(point1, point2)
             self._win.draw_line(line, 'black')
-
+        else:
+            self._win.draw_line(line, 'white')
+        
+        line = Line(Point(self._x2, self._y1), Point(self._x2, self._y2))
         if self.has_right_wall:
-            point1 = Point(self._x2, self._y1)
-            point2 = Point(self._x2, self._y2)
-            line = Line(point1, point2)
             self._win.draw_line(line, 'black')
+        else:
+            self._win.draw_line(line, 'white')
 
+        line = Line(Point(self._x1, self._y1), Point(self._x2, self._y1))
         if self.has_top_wall:
-            point1 = Point(self._x1, self._y1)
-            point2 = Point(self._x2, self._y1)
-            line = Line(point1, point2)
             self._win.draw_line(line, 'black')
+        else:
+            self._win.draw_line(line, 'white')
 
+        line = Line(Point(self._x1, self._y2), Point(self._x2, self._y2))
         if self.has_bottom_wall:
-            point1 = Point(self._x1, self._y2)
-            point2 = Point(self._x2, self._y2)
-            line = Line(point1, point2)
             self._win.draw_line(line, 'black')
+        else:
+            self._win.draw_line(line, 'white')
 
     def draw_move(self, to_cell, undo=False):
         if self._win is None:
