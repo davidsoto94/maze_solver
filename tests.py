@@ -41,6 +41,16 @@ class Tests(unittest.TestCase):
             False,
         )
 
+    def test_all_cells_return_to_visited_false(self):
+        num_cols = 16
+        num_rows = 12
+        m1 = Maze(0, 0, num_rows, num_cols, 10, 10)
+        for cell in m1._cells:
+            for c in cell:
+                self.assertEqual(
+                    c.visited,
+                    False,
+                )
 
 if __name__ == "__main__":
     unittest.main()
